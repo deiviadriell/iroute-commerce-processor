@@ -1,0 +1,5 @@
+pc_processdate;pc_codcomred;pc_nomcomred;pc_tipdoc;pc_numdoc;pc_ciudad;pc_direccion;pc_telefono;pc_email
+09/10/2026;CR3001;Supermercado Santa María;RUC;1790011122001;Quito;Av. Maldonado S12;022600700;santamaria@mail.ec
+09/10/2026;CR3002;Joyería Oro Fino;CED;0912345678;Guayaquil;Calle Pichincha 410;042300400;orofino@mail.ec
+09/10/2026;CR3003;Zapatería Paso Firme;RUC;12A;Cuenca;Calle Sucre 8-20;072820300;pasofirme@mail.ec
+09/10/2026;CR3004;;RUC;0102030405001;Cuenca;Av. Solano 3-10;072880100;anonimo@mail.ec

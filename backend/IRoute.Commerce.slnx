@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/IRoute.Commerce.Api/IRoute.Commerce.Api.csproj" />
+    <Project Path="src/IRoute.Commerce.Application/IRoute.Commerce.Application.csproj" />
+    <Project Path="src/IRoute.Commerce.Domain/IRoute.Commerce.Domain.csproj" />
+    <Project Path="src/IRoute.Commerce.Infrastructure/IRoute.Commerce.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/IRoute.Commerce.Tests/IRoute.Commerce.Tests.csproj" />
+  </Folder>
+</Solution>

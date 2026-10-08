@@ -1,0 +1,51 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center p-3">
+  <div class="card shadow-sm w-100" style="max-width: 380px">
+    <div class="card-body p-4">
+      <h1 class="h4 mb-1">Gestión de Comercios</h1>
+      <p class="text-muted mb-4">Ingrese sus credenciales</p>
+
+      @if (error(); as message) {
+        <div class="alert alert-danger py-2">{{ message }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="mb-3">
+          <label for="username" class="form-label">Usuario</label>
+          <input
+            id="username"
+            type="text"
+            class="form-control"
+            formControlName="username"
+            autocomplete="username"
+            [class.is-invalid]="invalid('username')"
+          />
+          <div class="invalid-feedback">El usuario es requerido.</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="form-label">Contraseña</label>
+          <input
+            id="password"
+            type="password"
+            class="form-control"
+            formControlName="password"
+            autocomplete="current-password"
+            [class.is-invalid]="invalid('password')"
+          />
+          <div class="invalid-feedback">La contraseña es requerida.</div>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          [disabled]="loading()"
+        >
+          @if (loading()) {
+            <span class="spinner-border spinner-border-sm me-1"></span>
+          }
+          Ingresar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

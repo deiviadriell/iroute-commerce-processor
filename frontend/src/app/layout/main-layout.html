@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/carga">Gestión de Comercios</a>
+    <ul class="navbar-nav me-auto">
+      @for (link of links; track link.path) {
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="link.path" routerLinkActive="active">{{ link.label }}</a>
+        </li>
+      }
+    </ul>
+    <span class="navbar-text text-light me-3">{{ user()?.fullName }}</span>
+    <button type="button" class="btn btn-outline-light btn-sm" (click)="logout()">Cerrar sesión</button>
+  </div>
+</nav>
+
+<main class="container-fluid py-4">
+  <router-outlet />
+</main>

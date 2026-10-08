@@ -1,0 +1,6 @@
+pc_processdate,pc_codcomred,pc_nomcomred,pc_tipdoc,pc_numdoc,pc_ciudad,pc_direccion,pc_telefono,pc_email
+2026-10-10,CR4001,Cafetería El Grano,RUC,1790055566001,Quito,Av. Shyris N40,022445566,elgrano@mail.ec
+2026-10-10,CR4002,,CED,1711122233,Quito,Calle Lizardo García,022667788,sinnombre3@mail.ec
+2026-10-11,CR4003,Lavandería Express,RUC,0990011223001,Guayaquil,Urdesa Central,042880011,express@mail.ec
+2026-10-11,CR4004,Peluquería Estilo,CED,09-1234567,Guayaquil,Av. Las Monjas,042881122,estilo@mail.ec
+2026-10-12,CR4005,Ferretería Central,RUC,0190012345001,Cuenca,Av. Huayna Cápac,072830011,central@mail.ec

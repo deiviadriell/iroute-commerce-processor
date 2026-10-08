@@ -1,0 +1,113 @@
+<h1 class="h4 mb-3">Procesar información</h1>
+
+@if (error(); as e) {
+  <div class="alert alert-danger">
+    {{ e.title }}
+    @if (e.details.length) {
+      <ul class="mb-0 mt-2">
+        @for (detail of e.details; track $index) {
+          <li>{{ detail }}</li>
+        }
+      </ul>
+    }
+  </div>
+}
+
+@if (result(); as r) {
+  <div class="alert alert-info">
+    Proceso del {{ r.processDate | date: "dd/MM/yyyy" }} finalizado. Registros
+    enviados a cuarentena: {{ r.quarantined }}.
+    @if (r.quarantined > 0) {
+      <a
+        class="alert-link"
+        [routerLink]="['/cuarentena']"
+        [queryParams]="{ processDate: r.processDate }"
+        >Ver detalle</a
+      >
+    }
+  </div>
+}
+
+<div class="row g-3">
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-header">Fecha de proceso</div>
+      <div class="card-body">
+        <form (ngSubmit)="process()" class="row g-2 align-items-end">
+          <div class="col">
+            <label for="processDate" class="form-label">pc_processdate</label>
+            <input
+              id="processDate"
+              name="processDate"
+              type="date"
+              class="form-control"
+              required
+              [ngModel]="selectedDate()"
+              (ngModelChange)="select($event)"
+            />
+          </div>
+          <div class="col-auto">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!selectedDate() || processing()"
+            >
+              @if (processing()) {
+                <span class="spinner-border spinner-border-sm me-1"></span>
+              }
+              Procesar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-header">Fechas cargadas</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+            class="table table-sm table-striped table-bordered table-hover align-middle mb-0"
+          >
+            <thead class="table-light">
+              <tr>
+                <th>Fecha</th>
+                <th class="text-end">Registros</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (d of dates(); track d.processDate) {
+                <tr [class.table-active]="d.processDate === selectedDate()">
+                  <td>{{ d.processDate | date: "dd/MM/yyyy" }}</td>
+                  <td class="text-end">{{ d.total }}</td>
+                  <td class="text-end">
+                    <button
+                      type="button"
+                      class="btn btn-link btn-sm p-0"
+                      (click)="select(d.processDate)"
+                    >
+                      Seleccionar
+                    </button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="3" class="text-center text-muted">
+                    {{
+                      loadingDates()
+                        ? "Cargando..."
+                        : "No hay registros cargados."
+                    }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

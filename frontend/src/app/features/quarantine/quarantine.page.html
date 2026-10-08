@@ -1,0 +1,104 @@
+<h1 class="h4 mb-3">Registros con errores</h1>
+
+@if (error(); as e) {
+  <div class="alert alert-danger">{{ e.title }}</div>
+}
+
+<div class="card mb-3">
+  <div class="card-body">
+    <form (ngSubmit)="load()" class="row g-2 align-items-end">
+      <div class="col-md-3">
+        <label for="dateFilter" class="form-label">Fecha de proceso</label>
+        <input
+          id="dateFilter"
+          name="dateFilter"
+          type="date"
+          class="form-control"
+          [ngModel]="dateFilter()"
+          (ngModelChange)="dateFilter.set($event)"
+        />
+      </div>
+      <div class="col-md-4">
+        <label for="search" class="form-label">Buscar</label>
+        <input
+          id="search"
+          name="search"
+          type="search"
+          class="form-control"
+          placeholder="Código, nombre, documento o motivo"
+          [ngModel]="search()"
+          (ngModelChange)="search.set($event)"
+        />
+      </div>
+      <div class="col-md-auto">
+        <button
+          type="submit"
+          class="btn btn-primary me-2"
+          [disabled]="loading()"
+        >
+          Consultar
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="clearFilters()"
+        >
+          Limpiar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <span>Comercios en cuarentena</span>
+    <span class="text-muted"
+      >{{ filtered().length }} de {{ records().length }}</span
+    >
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-sm table-striped table-bordered table-hover align-middle mb-0"
+      >
+        <thead class="table-light">
+          <tr>
+            <th>Fecha proceso</th>
+            <th>Código</th>
+            <th>Nombre comercio</th>
+            <th>Tipo doc.</th>
+            <th>Número doc.</th>
+            <th>Ciudad</th>
+            <th>Motivo</th>
+            <th>Fecha registro</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of filtered(); track r.id) {
+            <tr>
+              <td>{{ r.processDate | date: "dd/MM/yyyy" }}</td>
+              <td>{{ r.codComRed }}</td>
+              <td>{{ r.nomComRed }}</td>
+              <td>{{ r.tipDoc }}</td>
+              <td>{{ r.numDoc }}</td>
+              <td>{{ r.ciudad }}</td>
+              <td>
+                @for (reason of reasons(r); track reason) {
+                  <div>{{ reason }}</div>
+                }
+              </td>
+              <td>{{ r.quarantinedAt | date: "dd/MM/yyyy HH:mm" }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="8" class="text-center text-muted">
+                {{ loading() ? "Cargando..." : "No existen registros." }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

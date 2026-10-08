@@ -1,0 +1,146 @@
+<h1 class="h4 mb-3">Carga de archivo</h1>
+
+@if (result(); as r) {
+  <div class="alert alert-success">
+    Se registraron {{ r.inserted }} comercios del archivo {{ r.fileName }}.
+    Fechas de proceso:
+    @for (date of r.processDates; track date; let last = $last) {
+      <a
+        class="alert-link"
+        [routerLink]="['/procesar']"
+        [queryParams]="{ processDate: date }"
+        >{{ date | date: "dd/MM/yyyy" }}</a
+      >{{ last ? "" : ", " }}
+    }
+  </div>
+}
+
+@if (apiError(); as error) {
+  <div class="alert alert-danger">
+    {{ error.title }}
+    @if (error.details.length) {
+      <ul class="mb-0 mt-2">
+        @for (detail of error.details; track $index) {
+          <li>{{ detail }}</li>
+        }
+      </ul>
+    }
+  </div>
+}
+
+<div class="card mb-3">
+  <div class="card-body">
+    <label for="file" class="form-label">Archivo (commerce_DDMMYYYY.csv)</label>
+    <div class="row g-2">
+      <div class="col-md-6">
+        <input
+          #fileInput
+          id="file"
+          type="file"
+          class="form-control"
+          accept=".csv,text/csv"
+          [class.is-invalid]="fileError()"
+          (change)="onFileSelected($event)"
+        />
+        <div class="invalid-feedback">{{ fileError() }}</div>
+      </div>
+      <div class="col-md-auto">
+        <button
+          type="button"
+          class="btn btn-primary me-2"
+          [disabled]="!canUpload()"
+          (click)="upload()"
+        >
+          @if (uploading()) {
+            <span class="spinner-border spinner-border-sm me-1"></span>
+          }
+          Enviar
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          [disabled]="!file()"
+          (click)="cancel()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (preview(); as p) {
+  @if (p.missingColumns.length) {
+    <div class="alert alert-danger">
+      Faltan columnas en la cabecera: {{ p.missingColumns.join(", ") }}
+    </div>
+  }
+
+  <div class="card">
+    <div class="card-header d-flex justify-content-between">
+      <span>Vista previa</span>
+      <span class="text-muted"
+        >{{ p.rows.length }} registros, {{ rowsWithIssues() }} con
+        observaciones</span
+      >
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-sm table-striped table-bordered table-hover align-middle text-nowrap mb-0"
+        >
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              @for (column of columns; track column) {
+                <th>{{ column }}</th>
+              }
+              <th>Observaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of pagedRows(); track row.line) {
+              <tr [class.table-warning]="row.issues.length">
+                <td>{{ row.line }}</td>
+                @for (column of columns; track column) {
+                  <td>{{ row.values[column] }}</td>
+                }
+                <td>{{ row.issues.join(", ") }}</td>
+              </tr>
+            } @empty {
+              <tr>
+                <td
+                  class="text-center text-muted"
+                  [attr.colspan]="columns.length + 2"
+                >
+                  Sin registros
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    @if (totalPages() > 1) {
+      <div
+        class="card-footer d-flex justify-content-between align-items-center"
+      >
+        <span class="text-muted"
+          >Página {{ page() + 1 }} de {{ totalPages() }}</span
+        >
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item" [class.disabled]="page() === 0">
+            <button type="button" class="page-link" (click)="changePage(-1)">
+              Anterior
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="page() + 1 >= totalPages()">
+            <button type="button" class="page-link" (click)="changePage(1)">
+              Siguiente
+            </button>
+          </li>
+        </ul>
+      </div>
+    }
+  </div>
+}

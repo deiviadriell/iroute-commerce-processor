@@ -1,0 +1,5 @@
+pc_processdate,pc_codcomred,pc_nomcomred,pc_tipdoc,pc_numdoc,pc_ciudad,pc_direccion,pc_telefono,pc_email
+2026-10-16,CR6001,Tienda Uno,RUC,1790000001001,Quito,Dir 1,022000001,uno@mail.ec
+16-octubre,CR6002,Tienda Dos,RUC,1790000002001,Quito,Dir 2,022000002,dos@mail.ec
+2026-13-40,CR6003,Tienda Tres,RUC,1790000003001,Quito,Dir 3,022000003,tres@mail.ec
+,CR6004,Tienda Cuatro,RUC,1790000004001,Quito,Dir 4,022000004,cuatro@mail.ec
